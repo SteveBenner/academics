@@ -3,7 +3,6 @@
 #### TODO: find pong code
 
 ## Pacific Union College (2012-2013)
-During my 3rd year as a CS major I focused on learning Ruby.
+During my 3rd year as a CS major, I focused on learning Ruby.
 
-**'20 questions' game**
-
+### *20 Questions*
