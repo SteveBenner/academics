@@ -9,6 +9,7 @@
 
 # classes
 class Knowledge_tree
+
 end
 
 class EmptyKT < Knowledge_tree
