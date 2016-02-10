@@ -1,0 +1,231 @@
+Stephen Benner
+CPTR-398 IPLS
+Study Notes
+
+Friday, April 12
+
+first task: reviewing ruby syntax and mechanics
+
+	- ruby is a very modern langauge, introducing key mechanics to save time
+	and effort in coding (ex. 1.9 hash tags using name: value pairs
+	- regexes built in; could be useful for validating rss feed data
+	- code block insanely powerful; called many things such as 'coroutines' but
+	I also think of them as more of 'closures?' I forget the term
+	- something new and fascinating: virtual instance variables (attr methods),
+	called 'uniform access principle' by Bertrand Meyer.
+	- more OOP: mixins, a way of implementing multiple inheritance in Ruby's
+	single inheritance structure. Book purports there are 'no drawbacks' but
+	obviously there is increased complexity accompanied with such features!
+	- code inclusion: 'require' or 'load' to import file, 'include' to reference
+	the actual module or class
+	
+conclusion:
+	- reviewed chapters 2,3,5 for hour 1 and 20 minutes
+	- fiddled around in IRB (the Ruby command-line interpreter shell)
+	
+second task: look into ruby and internet with second text
+
+	- makes network tasks really handy!!!!
+	- differentiation between secure socket transfer protocols and normal HTTP
+	- multiple layers of abstraction hide a lot of interface complexities
+	
+conclusion:
+	- started chapter 14 of 'Beginning Ruby from Novice to Professional' which
+	has to deal with networking and internet tasks
+	- I spend half of the time then writing a script to subclass the HTTP class
+	in 'net/http' of Ruby. It isn't finished of course, but the purpose is to
+	simply alert the user when an HTTP request method is called, and before
+	calling it, if using the 'SafeHTTP' class, the user will be prompted to
+	confirm the data transfer if they have not passed a validation argument to 
+	the overriden method (it simply calls the standard request method but
+	within the logic added). A neat way to experiment with one of Ruby's
+	strong points, which is easily extending and modifying features without
+	having to do much effort. It's a start anyway =)
+	
+	
+	
+Thursday, April 18
+
+main task: reading up on methods and I/O operations
+
+	- Wow; Ruby really is fantastically flexible.
+	Apparently it supports the usage of named parameters, through a very
+	interesting mechanic: in Ruby you can pash hashes in method calls, and they
+	are interepreted as the arguments. If you pass the hash as the LAST
+	argument, you can also omit braces, leaving you with a syntax ridiculously
+	close to english. Example:
+	
+	set_value :firstParam => 'wow!', :second => 'Ruby is crazy'
+	
+	- ruby uses the '<<' operator to push to arrays, but it can also be used
+	to pipe data to an IO object, reminiscent of the old C++ methods
+	- of course, I already knew Ruby possesses great reflection capabilities...
+	A cool feature is that you can iterate through all the objects in the
+	current ruby virtual machine using 'ObjectSpace.each_object'. Neat!!!
+	
+	
+	
+Wednesday, April 24
+
+main task: starting the development portion of 'Agile Development Wit Rails' book
+
+	- so far I have only installed Ruby, rubygems, and rails. This weekend I plan to get
+	started with the basic example and complete it before beginning my own project. I
+	think it's good practice to get the hang of all the commands anyways.
+	- I went online to research development environment of Ruby. Apparently there are two
+	main contenders, called RVM and rbenv, which are software that allow you to manage
+	multiple version of the language itself, as well as 'gemsets', packages of ruby gems
+	used for individual projects.
+	- getting started with the rails tutorial in the book, they have some great points.
+	The methodology they use is to begin with envisioning user experience above all,
+	sketching rough mockups of web screens, and then constructing the database schema.
+	
+	
+	
+Sunday, April 28
+
+main task: file operations in ruby
+
+   - I spent about 30 mins reading the 'Pragmatic Programmer's Guide' and some portions
+   of the ruby phrasebook to learn how ruby interfaces with the file system
+   - explored the modules 'Dir', 'File', and 'Filetest', which all have to do with
+   manipulating files and directories.
+   - Ruby can navigate with intuitive methods such as 'Dir.chdir' and display the path
+   with 'Dir.pwd'. Very easy. You can also scan files in a similar manner using the other
+   modules, and tools like grep and regular expressions to grab file names and their
+   paths easily.
+   - I could easily see these operations being vital in a whole slew of projects!
+   
+   
+   
+Sunday, May 5
+
+0600-0700 studied ruby syntax
+	- learned to use IO objects which can simulate I/O operations. StringIO
+	for example can be used to pipe output into, so you can manipulate and
+	observe the output of typical print commands
+	- memorized some more code tricks like using 'upto' method to iterate over
+	a range and 'step' to step over a range
+	- looked into basic object properties, such as the fact that they have
+	only instance variables, no public attributes or anything like that
+	- duck typing in Ruby means objcects can respond to any method implemented
+	by one of their inhereted classes
+	- played around with net/http methods and practiced basic GET command to
+	retrieve info from websites
+	
+	example:
+	
+	require 'net/http'
+	uri = URI('http://www.google.com')
+	response = Net::HTTP.get_response(uri)
+	puts response.body
+	
+	prints out the XHTML body of a GET call to google.com (the website)
+   
+   
+   
+Tuesday, May 14
+
+main task: miscellaneous web scraping
+
+   - I realize that it isn't exactly related to my rails project, but I nonetheless
+   consider it worthwhile in the study of the Ruby programming language to explore
+   useful and productive areas such as website scraping, the manual downloading, parsing,
+   and manipulating of web content.
+   - the standard net/http library in Ruby provides an easy way to access a website, 
+   using the GET operation. The open-uri library allows one to manipulate strings
+   representing a URL into easily-configurable URI objects that can be used in many
+   ways. The use of a URI object is primarily to represent the header of an HTTP protocol
+   request.
+   - exploring further, I found some great libraries for handling XML, HTML, and web
+   content. 'Nokogiri' is a fantastic library I found to parse and search XML documents.
+   - Nokogiri is used as part of a larger library called Mechanize, which is primarily
+   for web scraping. Using 'mechanize', one can create an 'agent' object to represent
+   an actual user-agent, meaning it can simulate the access of websites quite
+   realistically. Mechanie automatically grabs urls, and you can access them simply by
+   using object properties of the page being acccessed. Furthermore, you can use forms
+   and activate links and other UI elements, and sort all of these to boot:
+   
+   example:
+   
+   query = 'lolcats'
+   agent = Mechanize.new
+   page = agent.get('http://www.google.com/search?q=#{query}')
+   first_result = page.links_with(:text => /'#{query}'/)[0]
+   puts first_result.click.uri
+   
+   The above code sends a request to google, parses the result, 'click's the first result
+   on the returned paged which contains the text 'lolcats', and prints the URL of the
+   webpage linked to by said result.
+   
+   WOW!!!!!!!
+
+	
+	
+Saturday, May 11
+	- 20 minutes studying blocks and enumerators section
+	- 10 minutes reading documentation for IO and StringIO class, and Array,
+	and other various enumerable classes
+	
+	
+	
+Monday, May 13
+	- 20 mins learning metaprogramming; Ruby actually has structs, which is
+	is something I didn't know before. With structs you can avoid using classes
+	when unecessary, and with OpenStruct, you have even more flexibility... At
+	first I thought that it was unfortunate how tightly Ruby's classes were
+	encapsulated, being limited by the nature of the hashes. But enter
+	OpenStruct! OpenStruct allows you to arbitrarily specify attributes and
+	uses Ruby's metaprogramming to provide bracket and dot notation access
+	similar to Javascript. Crazy!!!!
+	
+	
+	
+Saturday, June 1
+	- I spent several hours just studying Ruby docs as I programmed. The
+	project I was working on was the guessing game, and it stretched me as a
+	programmer. Some new concepts I explored were regular expression usage,
+	object inspection (metaprogramming), recursive object creation with method,
+	and a wide variety of String and Array operations.
+	
+	
+Saturday, May 18
+	- Tuesday was spent getting my Rails project started. I set up the basic
+	framework and then read up on the Active Record procedures so I would
+	know the syntax for manipulating objects. Then I spent some time working
+	on metaprogramming for the guessing game.
+	
+	
+Saturday, May 25
+	- There is a large timeslot logged as 'Ruby docs'. This is bascially
+	because I was spending hours learning to use the Enumerable module in Ruby
+	so I could work on some implementations of sorting functions. I learned
+	quite a bit of how the innerds of Ruby work, and how powerful Enumerable
+	is; for example, you can use the Enumerator class to create a new iterator
+	for any object which supports Enumerable, so you are provided with both
+	internal and external iteration techniques.
+	
+	
+Saturday, June 1
+	- I didn't realize how often I am doing IPLS on saturday.... the reason is
+	because Ruby is my favorite programming langauge, and it's fun and
+	relaxing so I save it for the weekend once my harder/more tedious stuff
+	is out of the way. More Ruby documentation, mostly learning programming
+	and using the docs to try various things with collection classes such as
+	Array and Object, and learning more Enumerable techniques. It can save you
+	a lot of time learning these methods. For exampe, you can initialize and
+	create a new Array containing a sequence of squares using the following:
+	
+	a = Array.new(length) { |i| i* i }
+	
+Saturday, June 8
+	- Cramming to complete my Rails project; it took me over 7 hours to
+	successfully establish a working development environment on my Windows
+	machine... FML...
+	
+The rest is history! I spent the last time completing my project, which was
+infinitely more enjoyable after getting the dev environment set up... Geez...
+
+Well, that's it professor. Thank's for a great quarter, and should you ever
+decide to catch up with me in the future, rest assured my love affair with
+this immaculate langauge will have grown even stronger. Ruby is the best!!! =)

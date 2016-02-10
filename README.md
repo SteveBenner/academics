@@ -8,11 +8,4 @@ The focus of the exercise was recursion, manipulation of trees, and data structu
 
 ## Presentations
 
-- [What is Ruby?]()
-
----
-**TODO**
-
-- find old pong code
-- collect the rest of my Ruby scripts
-- make a pretty github project page for this repo
+- [What is Ruby?](CPTR398-IPLS-Ruby/ruby-presentation)
